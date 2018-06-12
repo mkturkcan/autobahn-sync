@@ -65,7 +65,7 @@ class SyncSession(object):
     def connect_to_async(self, async_session):
         self._async_session = async_session
 
-    @crochet.wait_for(timeout=30)
+    @crochet.wait_for(timeout=3000)
     def leave(self, reason=None, message=None):
         """Actively close this WAMP session.
 
@@ -74,7 +74,7 @@ class SyncSession(object):
         # see https://github.com/crossbario/autobahn-python/issues/605
         return self._async_session.leave(reason=reason, log_message=message)
 
-    @crochet.wait_for(timeout=30)
+    @crochet.wait_for(timeout=3000)
     def call(self, procedure, *args, **kwargs):
         """Call a remote procedure.
 
@@ -82,7 +82,7 @@ class SyncSession(object):
         """
         return self._async_session.call(procedure, *args, **kwargs)
 
-    @crochet.wait_for(timeout=30)
+    @crochet.wait_for(timeout=3000)
     def register(self, endpoint, procedure=None, options=None):
         """Register a procedure for remote calling.
 
@@ -92,11 +92,11 @@ class SyncSession(object):
             return self._callbacks_runner.put(partial(endpoint, *args, **kwargs))
         return self._async_session.register(proxy_endpoint, procedure=procedure, options=options)
 
-    @crochet.wait_for(timeout=30)
+    @crochet.wait_for(timeout=3000)
     def unregister(self, registration):
         return registration.unregister()
 
-    @crochet.wait_for(timeout=30)
+    @crochet.wait_for(timeout=3000)
     def publish(self, topic, *args, **kwargs):
         """Publish an event to a topic.
 
@@ -104,7 +104,7 @@ class SyncSession(object):
         """
         return self._async_session.publish(topic, *args, **kwargs)
 
-    @crochet.wait_for(timeout=30)
+    @crochet.wait_for(timeout=3000)
     def subscribe(self, handler, topic=None, options=None):
         """Subscribe to a topic for receiving events.
 
@@ -114,7 +114,7 @@ class SyncSession(object):
             return self._callbacks_runner.put(partial(handler, *args, **kwargs))
         return self._async_session.subscribe(proxy_handler, topic=topic, options=options)
 
-    @crochet.wait_for(timeout=30)
+    @crochet.wait_for(timeout=3000)
     def unsubscribe(self, subscription):
         return subscription.unsubscribe()
 
